@@ -1,0 +1,34 @@
+metadata:
+  app: my-app
+  namespace: my-team
+
+config:
+  - name: my-conf
+    mount: /config
+    type: configMap
+    from:
+      - "application.yaml"
+
+deploy:
+  type: Deployment
+  replicas: 2
+  version: "latest"
+  containers:
+    - name: my-app
+      image: "busybox"
+      command: "echo 'Hello World' && sleep 99d"
+
+access:
+  - protocol: https
+    host: hello-world-demo.yam.plus
+    cert: yam-plus
+    ingressEnabled: true
+    paths:
+      - /
+
+observe:
+  monitor:
+    enable: true
+    path: /metrics
+    targetPort: 80
+    intervalSeconds: 30
