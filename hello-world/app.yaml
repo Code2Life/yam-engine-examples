@@ -7,11 +7,11 @@ config:
     mount: /config
     type: configMap
     from:
-      - "application.yaml"
+      - "conf/application.yaml"
 
 deploy:
   type: Deployment
-  replicas: 2
+  replicas: ~{ replicas, 2 }
   version: "latest"
   containers:
     - name: my-app
