@@ -1,0 +1,21 @@
+metadata:
+  app: loki
+  namespace: monitoring
+  
+prepare:
+  - type: helm
+    name: loki
+    wait: true
+    version: ~{ loki.version, '2.14.1' }
+    repo: https://grafana.github.io/helm-charts
+    chartName: loki
+    values:
+      persistence:
+        enable: true
+      resources:
+        limits:
+          cpu: 1000m
+          memory: 512Mi
+        requests:
+          cpu: 100m
+          memory: 256Mi

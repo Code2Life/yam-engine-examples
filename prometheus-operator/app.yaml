@@ -1,0 +1,28 @@
+metadata:
+  app: prometheus
+  namespace: monitoring
+  
+prepare:
+  - type: helm
+    name: prometheus
+    wait: true
+    version: ~{ prometheus-stack.version, '39.8.0' }
+    repo: https://prometheus-community.github.io/helm-charts
+    chartName: kube-prometheus-stack
+    values:
+      replicaCount: ~{ cert-manager.replica, 1 }
+      prometheusSpec:
+        storageSpec:
+          volumeClaimTemplate:
+           spec:
+             accessModes: ["ReadWriteOnce"]
+             resources:
+               requests:
+                 storage: 10Gi
+        resources:
+          limits:
+            cpu: 1500m
+            memory: 800Mi
+          requests:
+            cpu: 100m
+            memory: 400Mi

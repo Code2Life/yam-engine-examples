@@ -1,0 +1,42 @@
+metadata:
+  app: apisix
+  namespace: ingress-apisix
+  
+prepare:
+  - type: helm
+    name: apisix
+    wait: true
+    version: ~{ apisix.version, '0.11.0' }
+    repo: https://charts.apiseven.com
+    values:
+      apisix:
+        resources:
+          limits:
+            cpu: 1000m
+            memory: 512Mi
+          requests:
+            cpu: 50m
+            memory: 128Mi
+      ingress-controller:
+        enabled: true
+      serviceMonitor:
+        enabled: true
+      pluginAttrs:
+        log-rotate:
+          enable_compression: false
+          interval: 3600
+          max_kept: 24
+        prometheus:
+          enable_export_server: true
+          export_addr:
+            ip: 0.0.0.0
+            port: 9091
+          export_uri: /apisix/prometheus/metrics
+        request-id:
+          snowflake:
+            data_machine_bits: 12
+            data_machine_interval: 10
+            data_machine_ttl: 30
+            enable: false
+            sequence_bits: 10
+            snowflake_epoc: 1609459200000

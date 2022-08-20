@@ -1,0 +1,19 @@
+metadata:
+  app: cert-manager
+  namespace: cert-manager
+  
+prepare:
+  - type: helm
+    name: cert-manager
+    wait: true
+    version: ~{ cert-manager.version, '1.9.1' }
+    repo: https://charts.jetstack.io
+    values:
+      replicaCount: ~{ cert-manager.replica, 1 }
+      resources:
+        limits:
+          cpu: 1000m
+          memory: 512Mi
+        requests:
+          cpu: 50m
+          memory: 128Mi

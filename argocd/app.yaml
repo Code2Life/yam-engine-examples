@@ -1,0 +1,33 @@
+metadata:
+  app: argocd
+  namespace: argocd
+  
+prepare:
+  - type: helm
+    name: argocd
+    wait: true
+    version: ~{ argocd.version, '4.10.8' }
+    repo: https://argoproj.github.io/argo-helm
+    chartName: argo-cd
+    values:
+      controller.resources:
+        limits:
+          cpu: 1000m
+          memory: 512Mi
+        requests:
+          cpu: 100m
+          memory: 128Mi
+      repoServer.resources:
+        limits:
+          cpu: 1000m
+          memory: 512Mi
+        requests:
+          cpu: 100m
+          memory: 128Mi
+      server.resources:
+        limits:
+          cpu: 1000m
+          memory: 512Mi
+        requests:
+          cpu: 100m
+          memory: 128Mi
