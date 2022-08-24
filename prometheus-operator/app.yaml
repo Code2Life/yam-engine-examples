@@ -10,7 +10,6 @@ prepare:
     repo: https://prometheus-community.github.io/helm-charts
     chartName: kube-prometheus-stack
     values:
-      replicaCount: ~{ cert-manager.replica, 1 }
       prometheusSpec:
         storageSpec:
           volumeClaimTemplate:
